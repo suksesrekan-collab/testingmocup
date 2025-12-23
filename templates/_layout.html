@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Statistics Dashboard{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar {
+            width: 64px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar:hover {
+            width: 250px;
+        }
+        
+        .sidebar .nav-text {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .sidebar:hover .nav-text {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="sidebar bg-gray-800 text-white min-h-screen flex flex-col">
+            <div class="p-4 border-b border-gray-700">
+                <h1 class="text-xl font-bold">SD</h1>
+            </div>
+            <nav class="flex-1 mt-6">
+                <a href="/" class="flex items-center px-4 py-3 text-sm font-medium {% if request.endpoint == 'dashboard' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-tachometer-alt text-lg"></i>
+                    <span class="nav-text ml-3">Dashboard</span>
+                </a>
+                <a href="/statistics" class="flex items-center px-4 py-3 text-sm font-medium {% if request.endpoint == 'statistics' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-chart-bar text-lg"></i>
+                    <span class="nav-text ml-3">Statistics</span>
+                </a>
+                <a href="/recipients" class="flex items-center px-4 py-3 text-sm font-medium {% if request.endpoint == 'recipients' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-users text-lg"></i>
+                    <span class="nav-text ml-3">Recipients</span>
+                </a>
+                <a href="/uploadlist" class="flex items-center px-4 py-3 text-sm font-medium {% if request.endpoint == 'uploadlist' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-file-upload text-lg"></i>
+                    <span class="nav-text ml-3">Upload List</span>
+                </a>
+                <a href="/aktapage" class="flex items-center px-4 py-3 text-sm font-medium {% if request.endpoint == 'aktapage' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-file-contract text-lg"></i>
+                    <span class="nav-text ml-3">Document Details</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+{% extends "_layout.html" %}
+{% block title %}Recipients{% endblock %}
+
+{% block content %}
+<div class="ml-16">  <!-- Changed from max-w-7xl mx-auto to ml-16 to align with sidebar -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Penerima Fiducia</h1>
+        <p class="text-gray-600 mt-2">List of fiduciary recipients and their contract details</p>
+    </div>
+
+    <!-- Stats Summary -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-lg bg-blue-100 text-blue-600">
+                    <i class="fas fa-users text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-600">Total Recipients</h3>
+                    <p class="text-2xl font-bold text-gray-900">{{ recipients|length }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-lg bg-green-100 text-green-600">
+                    <i class="fas fa-file-contract text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-600">Active Contracts</h3>
+                    <p class="text-2xl font-bold text-gray-900">{{ recipients|sum(attribute='contracts') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-lg bg-purple-100 text-purple-600">
+                    <i class="fas fa-chart-line text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-600">Avg. Contracts/Recipient</h3>
+                    <p class="text-2xl font-bold text-gray-900">{{ (recipients|sum(attribute='contracts') / recipients|length)|int }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <div class="flex items-center">
+                <div class="p-3 rounded-lg bg-yellow-100 text-yellow-600">
+                    <i class="fas fa-gavel text-xl"></i>
+                </div>
+                <div class="ml-4">
+                    <h3 class="text-sm font-medium text-gray-600">Top Recipient</h3>
+                    <p class="text-lg font-bold text-gray-900 truncate">{{ (recipients|sort(attribute='contracts', reverse=true)|first).name[:15] }}{% if (recipients|sort(attribute='contracts', reverse=true)|first).name|length > 15 %}...{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recipients Table -->
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Recipient List</h3>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contracts</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for recipient in recipients %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">{{ recipient.name }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-500">{{ recipient.contracts }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                Active
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <button class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                            <button class="text-red-600 hover:text-red-900">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

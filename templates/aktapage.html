@@ -1,0 +1,77 @@
+{% extends "_layout.html" %}
+{% block title %}Document Details{% endblock %}
+
+{% block content %}
+<div class="ml-16">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Document Details</h1>
+        <p class="text-gray-600 mt-2">Manage and review document completeness</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b">Kelengkapan Dokumen</h3>
+            <div class="space-y-4">
+                {% for doc in doc_details.documents %}
+                <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span class="text-gray-700">{{ doc.name }}</span>
+                    {% if doc.status == 'uploaded' %}
+                    <div class="flex items-center space-x-2">
+                        <span class="px-2 py-1 text-xs rounded-full bg-indigo-100 text-indigo-800 font-medium">{{ doc.status|title }}</span>
+                        <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                            <i class="fas fa-download mr-1"></i> Download
+                        </button>
+                    </div>
+                    {% else %}
+                    <span class="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600">{{ doc.status|title }}</span>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4 pb-2 border-b">Daftar Collateral</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor Mesin</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor Rangka</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Warna</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Akta</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        {% for collateral in doc_details.collaterals %}
+                        <tr>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900">{{ collateral.category }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ collateral.engine_number }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ collateral.chassis_number }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-500">{{ collateral.color }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap text-sm">
+                                <button class="px-3 py-1 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700">
+                                    Upload
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="flex justify-end space-x-4">
+            <button class="px-5 py-2.5 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors">
+                Note Dokumen
+            </button>
+            <button class="px-5 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition-colors">
+                Validasi Dokumen
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

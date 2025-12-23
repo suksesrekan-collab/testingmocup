@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Statistics Dashboard{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-800 text-white min-h-screen">
+            <div class="p-4 border-b border-gray-700">
+                <h1 class="text-xl font-bold">Statistics Dashboard</h1>
+            </div>
+            <nav class="mt-6">
+                <a href="/" class="flex items-center px-6 py-3 text-sm font-medium {% if request.endpoint == 'dashboard' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-tachometer-alt mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="/statistics" class="flex items-center px-6 py-3 text-sm font-medium {% if request.endpoint == 'statistics' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-chart-bar mr-3"></i>
+                    Statistics
+                </a>
+                <a href="/recipients" class="flex items-center px-6 py-3 text-sm font-medium {% if request.endpoint == 'recipients' %}bg-indigo-600{% else %}hover:bg-gray-700{% endif %}">
+                    <i class="fas fa-users mr-3"></i>
+                    Recipients
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-4 ml-64">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</body>
+</html>
