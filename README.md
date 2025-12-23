@@ -1,5 +1,5 @@
 # testinguistatistic
-pake db sqlite buat mockup
+pake db hostinger buat mockup
 
 # Statistics Dashboard Mockup
 
